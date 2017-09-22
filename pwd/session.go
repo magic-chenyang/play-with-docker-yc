@@ -182,7 +182,9 @@ func (p *pwd) SessionGet(sessionId string) *types.Session {
 	defer observeAction("SessionGet", time.Now())
 
 	s, _ := p.storage.SessionGet(sessionId)
-
+	if s == nil {
+		return nil
+	}
 	if err := p.prepareSession(s); err != nil {
 		log.Println(err)
 		return nil
